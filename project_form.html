@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+            text-align: left;
+            margin: 20px;
+        }
+        .form-container {
+            max-width: 90%;
+            width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .form-group button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #218838;
+        }
+        .char-counter {
+            text-align: right;
+            font-size: 0.9em;
+            color: #555;
+        }
+        @media (max-width: 600px) {
+            body {
+                margin: 10px;
+            }
+            .form-container {
+                padding: 15px;
+                width: 90%;
+            }
+            .form-group input,
+            .form-group textarea,
+            .form-group select,
+            .form-group button {
+                font-size: 1em;
+            }
+            .char-counter {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+    <h2>Project Form</h2>
+    <form action="submit_project.php" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="type">Project Type:</label>
+            <select id="type" name="type">
+                <option value="nft">NFT</option>
+                <option value="token">Token</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="name">Project Name:</label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address">
+        </div>
+        <div class="form-group">
+            <label for="description">Project Description:</label>
+            <textarea id="description" name="description" rows="4" maxlength="5000" oninput="updateCharCounter(this);"></textarea>
+            <div id="charCounter" class="char-counter">5000 characters remaining</div>
+        </div>
+        <div class="form-group">
+            <label for="website">Website:</label>
+            <input type="url" id="website" name="website">
+        </div>
+        <div class="form-group">
+            <label for="twitter">Twitter:</label>
+            <input type="url" id="twitter" name="twitter">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="start">Start Date:</label>
+            <input type="date" id="start" name="start">
+        </div>
+        <div class="form-group">
+            <label for="end">End Date:</label>
+            <input type="date" id="end" name="end">
+        </div>
+        <div class="form-group">
+            <label for="logo">Project Logo:</label>
+            <input type="file" id="logo" name="logo" accept="image/*">
+        </div>
+        <div class="form-group">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function updateCharCounter(element) {
+        var maxLength = 5000;
+        var currentLength = element.value.length;
+        var remaining = maxLength - currentLength;
+        document.getElementById('charCounter').innerText = remaining + ' characters remaining';
+    }
+</script>
+
+</body>
+</html>

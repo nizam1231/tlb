@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Lion NFT Auction Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Lion NFT Auction Platform</h1>
+        <p>Explore and place your bids on unique digital assets</p>
+    </header>
+
+    <div id="wallet-info">
+        <button id="connect-wallet">Connect Wallet</button>
+        <div id="wallet-address"></div>
+        <div id="wallet-balance"></div>
+    </div>
+
+    <div id="loading-spinner" style="display: none;">Loading...</div>
+
+    <div class="container">
+        <div class="nft-card" id="nft1">
+            <img src="https://via.placeholder.com/300x200" alt="NFT Image">
+            <div class="info">
+                <h3>NFT Title 1</h3>
+                <p>Description of the NFT</p>
+                <div class="bid-info">
+                    <p><strong>Current Bid:</strong> 0.5 MATIC</p>
+                    <p><strong>Time Remaining:</strong> 2 hours</p>
+                </div>
+                <button onclick="placeBid(1)">Place Bid</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+    <script>
+        let web3;
+        let userWalletAddress = localStorage.getItem("userWalletAddress") || null;
+        const contractAddress = "YOUR_CONTRACT_ADDRESS"; // أدخل عنوان العقد
+        const abi = [/* أدخل ABI هنا */];
+
+        // التحقق إذا كانت MetaMask موجودة
+        if (window.ethereum) {
+            web3 = new Web3(window.ethereum);
+            console.log("MetaMask is installed!");
+
+            // وظيفة الاتصال بالمحفظة
+            async function connectWallet() {
+                try {
+                    console.log("Requesting wallet connection...");
+
+                    // طلب من MetaMask لتوصيل المحفظة
+                    await window.ethereum.request({ method: "eth_requestAccounts" });
+                    const accounts = await web3.eth.getAccounts();
+                    console.log("Connected accounts:", accounts);
+
+                    userWalletAddress = accounts[0];
+                    localStorage.setItem("userWalletAddress", userWalletAddress);
+                    document.getElementById("wallet-address").innerText = `Connected Address: ${userWalletAddress}`;
+
+                    // جلب رصيد المحفظة
+                    const balanceWei = await web3.eth.getBalance(userWalletAddress);
+                    const balance = web3.utils.fromWei(balanceWei, 'ether');
+                    document.getElementById("wallet-balance").innerText = `Balance: ${balance} MATIC`;
+
+                    // التحقق من الشبكة المتصلة
+                    const chainId = await web3.eth.getChainId();
+                    console.log("Current chain ID:", chainId);
+                    if (chainId !== 137) {
+                        await switchToPolygon();
+                    }
+
+                    alert("Successfully connected to MetaMask!");
+                } catch (error) {
+                    console.error("Error connecting wallet:", error);
+                    alert("Failed to connect wallet. Please try again.");
+                }
+            }
+
+            // تبديل الشبكة إلى Polygon
+            async function switchToPolygon() {
+                try {
+                    await window.ethereum.request({
+                        method: 'wallet_addEthereumChain',
+                        params: [{
+                            chainId: '0x89',
+                            chainName: 'Polygon Mainnet',
+                            nativeCurrency: {
+                                name: 'MATIC',
+                                symbol: 'MATIC',
+                                decimals: 18
+                            },
+                            rpcUrls: ['https://polygon-rpc.com/'],
+                            blockExplorerUrls: ['https://polygonscan.com/']
+                        }]
+                    });
+                    alert("Switched to Polygon network!");
+                } catch (error) {
+                    console.error("Error switching network:", error);
+                    alert("Please switch to the Polygon network in MetaMask.");
+                }
+            }
+
+            // تحميل العقد
+            async function loadContract() {
+                nftContract = new web3.eth.Contract(abi, contractAddress);
+            }
+
+            loadContract();
+        } else {
+            alert("Please install MetaMask!");
+            console.log("MetaMask is not installed.");
+        }
+
+        // عند الضغط على الزر "Connect Wallet"
+        document.getElementById("connect-wallet").addEventListener("click", connectWallet);
+    </script>
+</body>
+</html>
