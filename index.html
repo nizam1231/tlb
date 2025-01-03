@@ -1,215 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TLB</title>
-    <style>
-        body {
-            text-align: justify;
-            margin: 20px;
-            background-color: #4A7A8B; /* Background color */
-            color: white; /* Text color */
-            font-family: 'Droid Sans', sans-serif; /* Font family */
-        }
-        h1 {
-            font-size: 36px;
-        }
-        h1 small {
-            font-size: 60%;
-        }
-        p {
-            font-size: 16px;
-            line-height: 1.5;
-        }
-        .paragraph-400, .paragraph-300, .paragraph-600 {
-            font-family: Arial, sans-serif;
-            word-spacing: normal;
-            letter-spacing: normal;
-            line-height: 1.5;
-            white-space: pre-wrap;
-            font-size: 17px;
-            max-width: 100%;
-        }
-        @media (min-width: 600px) {
-            body {
-                margin-left: 90px;
-                margin-right: 90px;
-            }
-            .paragraph-400 {
-                max-width: 400px;
-            }
-            .paragraph-600, .paragraph-300 {
-                max-width: 600px;
-				
-            }
-        }
-		
-        /* Menu styles */
-        nav {
-            position: relative;
-        }
-        .menu {
-            display: none;
-            list-style-type: none;
-            padding: 0;
-        }
-        .menu li {
-            margin: 5px 0;
-        }
-        .menu a {
-            color: white;
-            text-decoration: none;
-        }
-        /* Hamburger menu icon */
-        .menu-icon {
-            display: block;
-            width: 30px;
-            height: 30px;
-            background-color: white;
-            cursor: pointer;
-            position: relative;
-        }
-        .menu-icon::before, .menu-icon::after {
-            content: '';
-            display: block;
-            width: 30px;
-            height: 5px;
-            background-color: #4A7A8B;
-            position: absolute;
-            left: 0;
-            transition: transform 0.3s ease;
-        }
-        .menu-icon::before {
-            top: 8px;
-        }
-        .menu-icon::after {
-            top: 18px;
-        }
-        /* Checkbox to toggle menu */
-        #menu-toggle {
-            display: none;
-        }
-        #menu-toggle:checked + .menu-icon::before {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-        #menu-toggle:checked + .menu-icon::after {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-        #menu-toggle:checked ~ .menu {
-            display: block;
-        
-        } 
-		img {
-            padding-right: 10px; /
-            padding-bottom: 10px; /
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wallet Connect</title>
+  <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.7.1/dist/umd/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 </head>
-
 <body>
-<header>
-        <nav  style="float: right;">
-            <input type="checkbox" id="menu-toggle">
-            <label for="menu-toggle" class="menu-icon"></label>
-            <ul class="menu">
-                <li><a href="index.html">HOME</a></li>
-                <li><a href="Business Showcase Zone.html" href="#about">Business Showcase Zone</a></li>
-                <li><a href="form.html">create zone</a></li>
-                <li><a href="contact">اتصل بنا</a></li>
-            </ul>
-        </nav>
-</header>
-    
-    
-    <h3>TLB PROJECT</h3> 
-	<hr>
-    
-    
-	<h1>
-        TLB
-        <small>Project</small>
-    </h1>
-	
-    <h4>One integrated Project<br>Furniture NFTs Tokens</h4>
-    <br>
-    <h3>- Here, we will explain to you the project idea,<br> how it started, and what TLB is.</h3>
-    <img src="tlb.png" alt="html tutorial" style="width:470px;height:auto; float: right;max-width:100%">
-	
-    <p class="paragraph-400">
-	
-        The project owner needed an idea to support the private artisan sector, especially in furniture. He desired a qualitative leap that was unlike any before; he wanted distinction and uniqueness. He needed a project that would launch from the city of Tripoli, Lebanon, to the entire world. He wanted to show the world the beauty and creativity of a city whose artisanal works have flourished and continue to flourish with ingenuity to this day.
-    </p>
-    
-    <p class="paragraph-400">
-	
-        Then, he began the preparations...
-        
-        He started working on eight sheets of paper, embarking on the journey of a million steps with his modest progress, step by step.
-        
-        <b><q>I wanted the furniture design to reflect the city's cultural and historical heritage, incorporating Scandinavian touches and techniques. I began drawing and learning on seven A4 sheets, and the eighth is what you see now.</q></b>
-        
-        So this is where the idea began. A piece of furniture was designed to be the start of the TLB project. To make it unique and different, and to reach a wider audience, the project owner decided to incorporate NFTs into this work. The design was published on the "OpenSea" platform with the seven documents under the name TheFirst Design.
-    </p>
-    <br>
-    <h3>- TLBToken</h3>
-    <p class="paragraph-600">
-        To develop the project on a broader scale, work is being done on TLBToken for people interested in investing in TLB.
-        
-        This Token was specifically created to develop and support the TLB project. We worked on TLBToken to serve as an announcement for our project.
-        
-        We have not yet listed or included it, as we are currently working on the distribution as follows:
-        
-        We have developed a set of NFTs under the name "Airdrop TLB token" with various prices starting from $5.
-        
-        Each buyer of this collection will receive 1000 tokens.
-        
-        The first distribution will consist of 1,500,000 tokens.
-        
-        <b><q>I will distribute all the tokens to make them more reliable for investors. This will be done in phases, and I may burn some tokens.</q>
+  <button onclick="connectWC()">Connect Wallet Connect</button>
+
+  <script type="text/javascript">
+    var account;
+
+    // https://docs.walletconnect.com/quick-start/dapps/web3-provider
+    var provider = new WalletConnectProvider.default({
+      rpc: {
+        1: "https://cloudflare-eth.com/", // https://ethereumnodes.com/
+        137: "https://polygon-rpc.com/", // https://docs.polygon.technology/docs/develop/network-details/network/
+        // ...
+
+      },
+      // bridge: 'https://bridge.walletconnect.org',
+    });
+
+    var connectWC = async () => {
+      await provider.enable();
+
+      //  Create Web3 instance
+      const web3 = new Web3(provider);
+      window.w3 = web3
+
+      var accounts  = await web3.eth.getAccounts(); // get all connected accounts
+      account = accounts[0]; // get the primary account
+    }
 
 
-</b>
-        We are currently working on a development plan for this project, which includes integrating it into the retail market where you will be able to use TLBToken to purchase what we produce at TLB.
-        
-        So if you wish to invest in this token, don't hesitate to buy "Airdrop TLB token" to receive 1000 tokens. The maximum per wallet is 3000 tokens.
-        
-        On the Polygon network
-        TOKEN CONTRACT :
-        MAX_SUPPLY = 50000000
-        MAX_WALLET_AMOUNT = 3000
-        CONTRACT: <small>0xD993751fBfC9A02249b839f3f3FB0E0188097DfB</small><br>
-    </p>
+    var sign = async (msg) => {
+      if (w3) {
+        return await w3.eth.personal.sign(msg, account)
+      } else {
+        return false
+      }
+    }
 
-    <h3>- Business Showcase Zone</h3>
-    <p class="paragraph-300">
-        <strong><q>I believe that every entrepreneur in the field of digital tokens (Tokens) and non-fungible tokens (NFTs) deserves the opportunity to showcase their work and projects to the world. Therefore, we have created this platform as part of our website to serve as a stage for presenting your innovative digital projects.</q></strong>
-        
-        What is the Business Showcase Zone?
-        
-        The Business Showcase Zone is a dedicated section on our website that allows entrepreneurs and creators in the field of NFTs and Tokens to showcase their work and projects for free. Whether you work in digital arts, games, digital collectibles, or any other field related to digital technology, we are here to help you reach a wider audience of interested people.
-        
-        How does it work?
-        
-        1. Registration and subscription: You can easily subscribe to the Business Showcase Zone by registering on our website.
-        
-        2. Uploading projects: After registration, you can upload details of your project or digital work, including images, description, and links to your social media or websites.
-        
-        3. Interaction and participation: Visitors to our website will be able to browse your works and interact with them, increasing your chances of gaining new followers and interested parties in your project.
-        
-        Why choose the Business Showcase Zone?
-        
-        - Free of charge: You can showcase your work at no cost.
-        
-        - Greater reach: Our website reaches a wide audience interested in NFT and Token projects.
-        
-        - Technological support: Benefit from Token and NFT technologies to enhance your work.
-        
-        - Community building: Join a community of creators and entrepreneurs in the digital field, share experiences, and benefit from their expertise.
-        
-        We look forward to seeing your digital creations!
-    </p>
+    var contract = async (abi, address) => {
+      if (w3) {
+        return new w3.eth.Contract(abi, address)
+      } else {
+        return false
+      }
+    }
+
+    var disconnect = async () => {
+      // Close provider session
+      await provider.disconnect()
+    }
+
+
+    var address = "0x4b4f8ca8fb3e66b5ddafcebfe86312cec486dae1"
+    var abi = [{"inputs":[],"name":"count","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"increment","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"}]
+
+
+  </script>
 
 </body>
 </html>
